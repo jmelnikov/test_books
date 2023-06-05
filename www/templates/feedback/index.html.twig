@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block body %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6">
+                <form method="POST" id="form" action="{{ path('feedback.sent') }}">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                                {% if app.request.get('email') is not empty %} value="{{ app.request.get('email') }}"{% endif %}
+                               required>
+                        {% if errors is defined %}
+                            {% for error in errors %}
+                                {% if error['type'] == 'email' %}
+                                    <div class="text-small text-danger">Неправильно указан
+                                        Email
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                                {% if app.request.get('name') is not empty %}
+                                    value="{{ app.request.get('name') }}"
+                                {% elseif app.user is not empty %}
+                                    value="{{ app.user.username }}"
+                                {% endif %}
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" id="phone" name="phone"
+                               {% if app.request.get('message') is not empty %}value="{{ app.request.get('phone') }}"{% endif %}>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Текст обращения</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" minlength="3"
+                                  style="resize: none" required>{% if app.request.get('message') is not empty %}{{ app.request.get('message') }}{% endif %}</textarea>
+                        {% if errors is defined %}
+                            {% for error in errors %}
+                                {% if error['type'] == 'message' %}
+                                    <div class="text-small text-danger">Слишком короткий текст обращения</div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <div class="g-recaptcha" data-sitekey="6Ldlf28mAAAAACkEbUAgfValF3oytkBhW9cMVk1D"></div>
+                        <div class="text-small text-danger" id="captchaCheck" hidden>Вы не прошли reCaptcha</div>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" id="submitBtn" class="btn btn-primary">Отправить сообщение</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#form').submit(function () {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0) {
+                $('#captchaCheck').removeAttr('hidden');
+                return false;
+            } else {
+                $('#captchaCheck').attr('hidden', true);
+            }
+        });
+    </script>
+{% endblock %}

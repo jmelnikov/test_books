@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вход на сайт{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <form action="{{ path('security.login') }}" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="username" name="_username" value="{{ username }}">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="password" name="_password">
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

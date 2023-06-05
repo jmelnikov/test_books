@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p><strong>Имя:</strong> {{ feedback.name }}</p>
+            <p><strong>Email:</strong> {{ feedback.email }}</p>
+            <p><strong>Телефон:</strong> {{ feedback.phone }}</p>
+            <p><strong>Текст обращения:</strong><br/>{{ feedback.message|nl2br }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
