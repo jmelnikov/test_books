@@ -43,5 +43,14 @@ services:
       - "MYSQL_USER=${MYSQL_USER}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
 
+  composer:
+    build:
+      context: ./composer
+    container_name: ${PROJECT_NAME}-composer
+    image: composer
+    volumes:
+      - ../www:/var/www
+    command: composer install
+
 volumes:
   mysql:
