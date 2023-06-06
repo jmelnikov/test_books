@@ -41,4 +41,17 @@ class BooksController extends AbstractController
             'book' => $book
         ]);
     }
+
+
+    #[Route('/search', name: 'search')]
+    public function search(Request $request, BooksService $booksService): Response
+    {
+        if($request->get('query')) {
+            $books = $booksService->searchBook($request);
+        } else {
+            $books = null;
+        }
+
+        return $this->render('books/search.html.twig', ['books' => $books]);
+    }
 }

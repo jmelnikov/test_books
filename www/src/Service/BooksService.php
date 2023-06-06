@@ -35,6 +35,11 @@ class BooksService
         return $this->entityManager->getRepository(Book::class)->getBookByID($id);
     }
 
+    public function searchBook(Request $request): array|null
+    {
+        return $this->entityManager->getRepository(Book::class)->searchByQuery($request);
+    }
+
     public function saveBook(int $current_book_id, Request $request): array|bool
     {
         $current_book = $this->getBookByID($current_book_id);

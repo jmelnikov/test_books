@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Author;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Book>
@@ -49,5 +52,14 @@ class BookRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function searchByQuery(Request $request): array|null
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.title LIKE :query')
+            ->setParameter('query', '%'.$request->get('query').'%')
+            ->setMaxResults(20)
+            ->getQuery()->getResult();
     }
 }

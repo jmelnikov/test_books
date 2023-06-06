@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список книг{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="get" action="{{ path('books.search') }}">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" aria-label="Search form" aria-describedby="button-search" name="query" value="{{ app.request.get('query') }}">
+                    <button class="btn btn-primary" type="submit" id="button-search">Искать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Автор</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Дата публикации</th>
+                        <th scope="col">ISBN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <th scope="row">{{ book.id }}</th>
+                            <td>
+                                {% for author in book.author %}
+                                    {{ author.name }}{% if author != book.author|last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('books.get', {id: book.id}) }}">{{ book.title }}</a></td>
+                            <td>{{ book.publishDate|date('d.m.Y ') }}</td>
+                            <td>{{ book.isbn }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
