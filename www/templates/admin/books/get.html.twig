@@ -9,7 +9,7 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-3">
-                        <img src="/images/{{ book.thumbnailUrl }}" class="img-fluid rounded-start" alt="{{ book.title }}">
+                        <img src="/images/{{ book.thumbnailUrl ?? 'assets/no_image.png' }}" class="img-fluid rounded-start" alt="{{ book.title }}">
                     </div>
                     <div class="col-md-9">
                         <div class="card-body">
@@ -45,13 +45,17 @@
                             <div class="modal fade" id="editBookModal" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
-                                        <form method="post" action="{{ path('admin.books.save', {id: book.id}) }}">
+                                        <form method="post" action="{{ path('admin.books.save', {id: book.id}) }}" enctype="multipart/form-data">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Редактирование книги</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="thumbnailFile" class="form-label">Выбрать файл изображения</label>
+                                                    <input class="form-control" type="file" id="thumbnailFile" name="thumbnailFile" accept="image/png, image/jpeg">
+                                                </div>
                                                 <div class="mb-3">
                                                     Авторы
                                                 </div>

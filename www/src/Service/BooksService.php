@@ -8,6 +8,7 @@ use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class BooksService
@@ -44,6 +45,22 @@ class BooksService
                 'message' => 'not_found'
             ];
         }
+
+        /**
+         * @var UploadedFile $thumbnail
+         */
+        $thumbnail = $request->files->get('thumbnailFile');
+
+        if(!empty($current_book->getThumbnailUrl())) {
+            $filename = $current_book->getThumbnailUrl();
+        } else {
+            do {
+                $filename = md5(microtime().rand()).'.jpg';
+            }
+            while (file_exists(dirname(__DIR__, 2).'/public/images/'.$filename));
+        }
+
+        file_put_contents($filename, $thumbnail->getContent());
 
         $current_book->setTitle($request->request->get('bookTitle'));
         $current_book->setIsbn($request->request->get('bookIsbn'));

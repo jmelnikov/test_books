@@ -33,7 +33,6 @@ class BooksParseFileCommand extends Command
 
     private const DEFAULT_CATEGORY = 'Новинки';
     private const UNKNOWN_AUTHOR = 'Не указан';
-    private const NO_PHOTO_PLACEHOLDER = 'assets/no_image.png';
 
     public function __construct(EntityManagerInterface $entityManager, HttpClientInterface $httpClient, KernelInterface $kernel, string $name = null)
     {
@@ -101,7 +100,7 @@ class BooksParseFileCommand extends Command
         } else {
             $book->setPublishDate(null);
         }
-        $book->setThumbnailUrl($this->downloadImage($book_data['thumbnailUrl'] ?? null) ?? self::NO_PHOTO_PLACEHOLDER);
+        $book->setThumbnailUrl($this->downloadImage($book_data['thumbnailUrl'] ?? null));
         $book->setPageCount($book_data['pageCount']);
         $book->setShortDescription($book_data['shortDescription'] ?? null);
         $book->setLongDescription($book_data['longDescription'] ?? null);
@@ -171,7 +170,7 @@ class BooksParseFileCommand extends Command
         do {
             $filename = md5(microtime().rand()).'.jpg';
         }
-        while (file_exists($filename));
+        while (file_exists($this->kernel->getProjectDir().'/public/images/'.$filename));
 
         file_put_contents($this->kernel->getProjectDir().'/public/images/'.$filename, $imageFile);
 

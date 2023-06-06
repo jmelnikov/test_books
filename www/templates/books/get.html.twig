@@ -9,7 +9,7 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-3">
-                        <img src="/images/{{ book.thumbnailUrl }}" class="img-fluid rounded-start" alt="{{ book.title }}">
+                        <img src="/images/{{ book.thumbnailUrl ?? 'assets/no_image.png' }}" class="img-fluid rounded-start" alt="{{ book.title }}">
                     </div>
                     <div class="col-md-9">
                         <div class="card-body">
