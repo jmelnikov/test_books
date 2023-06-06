@@ -32,6 +32,8 @@ class BooksParseFileCommand extends Command
     private KernelInterface $kernel;
 
     private const DEFAULT_CATEGORY = 'Новинки';
+    private const UNKNOWN_AUTHOR = 'Не указан';
+    private const NO_PHOTO_PLACEHOLDER = 'assets/no_image.png';
 
     public function __construct(EntityManagerInterface $entityManager, HttpClientInterface $httpClient, KernelInterface $kernel, string $name = null)
     {
@@ -99,7 +101,7 @@ class BooksParseFileCommand extends Command
         } else {
             $book->setPublishDate(null);
         }
-        $book->setThumbnailUrl($this->downloadImage($book_data['thumbnailUrl'] ?? null));
+        $book->setThumbnailUrl($this->downloadImage($book_data['thumbnailUrl'] ?? null) ?? self::NO_PHOTO_PLACEHOLDER);
         $book->setPageCount($book_data['pageCount']);
         $book->setShortDescription($book_data['shortDescription'] ?? null);
         $book->setLongDescription($book_data['longDescription'] ?? null);
@@ -120,6 +122,8 @@ class BooksParseFileCommand extends Command
 
     private function getAuthor(string $author_name): Author
     {
+        $author_name = strlen($author_name) > 0 ? $author_name : self::UNKNOWN_AUTHOR;
+
         $author = $this->entityManager->getRepository(Author::class)->findOneBy(['name' => $author_name]);
 
         if(!$author instanceof Author) {

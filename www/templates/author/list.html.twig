@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список авторов{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Количество книг</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for author in authors %}
+                        <tr>
+                            <th scope="row">{{ author.id }}</th>
+                            <td>{{ author.name }}</td>
+                            <td>{{ author.books.count }}</td>
+                            <td><a href="{{ path('author.get', {id: author.id}) }}">Смотреть книги автора</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

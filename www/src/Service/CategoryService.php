@@ -5,28 +5,24 @@ namespace App\Service;
 
 
 use App\Entity\Category;
-use App\Entity\Feedback;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CategoryService
 {
     private EntityManagerInterface $entityManager;
-    private ValidatorInterface $validator;
 
-    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator, MailerInterface $mailer)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->validator = $validator;
-        $this->mailer = $mailer;
     }
 
     public function getCategories(): array
     {
         return $this->entityManager->getRepository(Category::class)->findAll();
+    }
+
+    public function getCategoryByID(int $id): Category|null
+    {
+        return $this->entityManager->getRepository(Category::class)->findOneBy(['id' => $id]);
     }
 }

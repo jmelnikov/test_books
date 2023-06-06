@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список авторов{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>{{ author.name }}</h3>
+            <p>Книг: {{ author.books.count }}</p>
+        </div>
+    </div>
+</div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Год выпуска</th>
+                        <th scope="col">ISBN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in author.books %}
+                        <tr>
+                            <th scope="row">{{ book.id }}</th>
+                            <td><a href="{{ path('books.get', {id: book.id}) }}">{{ book.title }}</a></td>
+                            <td>{{ book.publishDate|date('Y') }}</td>
+                            <td>{{ book.isbn }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

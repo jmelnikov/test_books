@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service\Admin;
+namespace App\Service;
 
 
 use App\Entity\Book;
