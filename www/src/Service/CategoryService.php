@@ -37,6 +37,11 @@ class CategoryService
         return $this->entityManager->getRepository(Category::class)->findOneBy(['parent' => null, 'id' => $id]);
     }
 
+    public function getCategoriesInAlphabeticalOrder(): array
+    {
+        return $this->entityManager->getRepository(Category::class)->getCategoriesInAlphabeticalOrder();
+    }
+
     public function saveCategory(int $current_category_id, Request $request): array|bool
     {
         $current_category = $this->getCategoryByID($current_category_id);

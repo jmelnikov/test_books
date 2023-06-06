@@ -27,6 +27,11 @@ class AuthorsService
         return $this->entityManager->getRepository(Author::class)->findOneBy(['id' => $id]);
     }
 
+    public function getAuthorsInAlphabeticalOrder(): array
+    {
+        return $this->entityManager->getRepository(Author::class)->getAuthorsInAlphabeticalOrder();
+    }
+
     public function saveAuthor(int $current_author_id, Request $request): array|bool
     {
         $current_author = $this->getAuthorByID($current_author_id);

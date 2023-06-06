@@ -4,7 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Service\AuthorsService;
 use App\Service\BooksService;
+use App\Service\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,7 @@ class BooksController extends AbstractController
     }
 
     #[Route('/get/{id}', name: 'get', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
-    public function get(BooksService $booksService, int $id): Response
+    public function get(BooksService $booksService, AuthorsService $authorsService, CategoryService $categoryService, int $id): Response
     {
         $book = $booksService->getBookByID($id);
 
@@ -38,7 +40,9 @@ class BooksController extends AbstractController
         }
 
         return $this->render('admin/books/get.html.twig', [
-            'book' => $book
+            'book' => $book,
+            'authors' => $authorsService->getAuthorsInAlphabeticalOrder(),
+            'categories' => $categoryService->getCategoriesInAlphabeticalOrder()
         ]);
     }
 

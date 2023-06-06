@@ -53,6 +53,42 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
+                                                    Авторы
+                                                </div>
+                                                <div id="authorsList">
+                                                    {% for book_author in book.author %}
+                                                        <div class="mb-3">
+                                                            <select class="form-select" name="bookAuthor[]">
+                                                                <option value="0" selected>Удалить автора</option>
+                                                                {% for author in authors %}
+                                                                    <option value="{{ author.id }}" {% if book_author.id == author.id %}selected{% endif %}>{{ author.name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="mb-3">
+                                                <button type="button" class="btn btn-primary md-3" id="addAuthor">Добавить автора</button>
+                                                </div>
+                                                <div class="mb-3">
+                                                    Категории
+                                                </div>
+                                                <div id="categoriesList">
+                                                    {% for book_category in book.category %}
+                                                        <div class="mb-3">
+                                                            <select class="form-select" name="bookCategory[]">
+                                                                <option value="0" selected>Удалить категорию</option>
+                                                                {% for category in categories %}
+                                                                    <option value="{{ category.id }}" {% if book_category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="mb-3">
+                                                <button type="button" class="btn btn-primary md-3" id="addCategory">Добавить категорию</button>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="bookTitle" class="form-label">Название</label>
                                                     <input type="text" class="form-control" id="bookTitle" name="bookTitle"
                                                            value="{{ book.title }}">
@@ -84,7 +120,6 @@
                                     </div>
                                 </div>
                             </div>
-                            </p>
                             <p class="card-text">{{ book.shortDescription|nl2br }}</p>
                             <p class="card-text">{{ book.longDescription|nl2br }}</p>
                         </div>
@@ -94,4 +129,24 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#addAuthor').click(function () {
+        $('#authorsList').html($('#authorsList').html() + '<div class="mb-3"><select class="form-select" name="bookAuthor[]"> \
+            <option value="0" selected>Удалить автора</option> \
+        {% for author in authors %} \
+        <option value="{{ author.id }}">{{ author.name }}</option> \
+        {% endfor %} \
+    </select></div>')
+    });
+
+    $('#addCategory').click(function () {
+        $('#categoriesList').html($('#categoriesList').html() + '<div class="mb-3"><select class="form-select" name="bookCategory[]"> \
+        <option value="0" selected>Удалить категорию</option> \
+    {% for category in categories %} \
+    <option value="{{ category.id }}">{{ category.name }}</option> \
+    {% endfor %} \
+    </select></div>')
+    });
+</script>
 {% endblock %}

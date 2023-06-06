@@ -4,7 +4,9 @@
 namespace App\Service;
 
 
+use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,6 +50,30 @@ class BooksService
         $current_book->setShortDescription($request->request->get('shortDescription'));
         $current_book->setLongDescription($request->request->get('longDescription'));
         $current_book->setPublishDate(new \DateTime($request->request->get('publishedDate')));
+
+        foreach ($current_book->getAuthor() as $author) {
+            $current_book->removeAuthor($author);
+        }
+
+        foreach ($request->request->all('bookAuthor') as $author_id) {
+            $author = $this->entityManager->getRepository(Author::class)->find($author_id);
+
+            if($author instanceof Author) {
+                $current_book->addAuthor($author);
+            }
+        }
+
+        foreach ($current_book->getCategory() as $category) {
+            $current_book->removeCategory($category);
+        }
+
+        foreach ($request->request->all('bookCategory') as $category_id) {
+            $category = $this->entityManager->getRepository(Category::class)->find($category_id);
+
+            if($category instanceof Category) {
+                $current_book->addCategory($category);
+            }
+        }
 
         $this->entityManager->persist($current_book);
         $this->entityManager->flush();
