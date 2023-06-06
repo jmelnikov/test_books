@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BookRepository extends ServiceEntityRepository
 {
-    public const DEFAULT_PER_PAGE = 20;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Book::class);

@@ -16,7 +16,7 @@ class BooksController extends AbstractController
     #[Route('/list/{page}', name: 'list', requirements: ['page' => '\d+'], defaults: ['page' => 1])]
     public function list(Request $request, BooksService $booksService, int $page): Response
     {
-        $per_page = $request->get('per_page', BookRepository::DEFAULT_PER_PAGE);
+        $per_page = $request->get('per_page', $_ENV['BOOKS_PER_PAGE']);
 
         $books = $booksService->getBooksList($page, $per_page);
 
