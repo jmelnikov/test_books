@@ -1,7 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BooksController!{% endblock %}
+{% block title %}Список книг{% endblock %}
 
 {% block body %}
-    <h1>Список книг</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+        </div>
+    </div>
+</div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Автор</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Дата публикации</th>
+                        <th scope="col">ISBN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <th scope="row">{{ book.id }}</th>
+                            <td>
+                                {% for author in book.author %}
+                                    {{ author.name }}
+                                    {% if author != book.author|last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('admin.books.get', {id: book.id}) }}">{{ book.title }}</a></td>
+                            <td>{{ book.publishDate|date('d.m.Y ') }}</td>
+                            <td>{{ book.isbn }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% set pages_count = (books_count / per_page) %}
+    {% set pages_count = pages_count|round(0, 'ceil') %}
+    {{ pages_count }}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link {% if current_page == 1 %}disabled{% endif %}" href="{{ path('admin.books.list', {page: current_page-1}) }}">Назад</a></li>
+                        {% for paginator in current_page-5..current_page-1 %}
+                            {% if paginator >= 1 %}
+                                <li class="page-item"><a class="page-link" href="{{ path('admin.books.list', {page: paginator}) }}">{{ paginator }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="page-item"><a class="page-link disabled" href="{{ path('admin.books.list', {page: current_page}) }}">{{ current_page }}</a></li>
+                        {% for paginator in current_page+1..current_page+5 %}
+                            {% if paginator <= pages_count %}
+                                <li class="page-item"><a class="page-link" href="{{ path('admin.books.list', {page: paginator}) }}">{{ paginator }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="page-item"><a class="page-link {% if current_page == pages_count %}disabled{% endif %}" href="{{ path('admin.books.list', {page: current_page+1}) }}">Вперёд</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
 {% endblock %}

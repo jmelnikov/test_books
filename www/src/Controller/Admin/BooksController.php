@@ -2,26 +2,44 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Book;
+use App\Repository\BookRepository;
+use App\Service\Admin\BooksService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/books', name: 'admin.books.')]
 class BooksController extends AbstractController
 {
-    #[Route('/list', name: 'list')]
-    public function list(): Response
+    #[Route('/list/{page}', name: 'list', requirements: ['page' => '\d+'], defaults: ['page' => 1])]
+    public function list(Request $request, BooksService $booksService, int $page): Response
     {
+        $per_page = $request->get('per_page', BookRepository::DEFAULT_PER_PAGE);
+
+        $books = $booksService->getBooksList($page, $per_page);
+
         return $this->render('admin/books/list.html.twig', [
-            'controller_name' => 'BooksController',
+            'books' => $books,
+            'books_count' => $booksService->getBooksListCount(),
+            'current_page' => $page,
+            'per_page' => $per_page
         ]);
     }
 
-    #[Route('/add', name: 'add')]
-    public function add(): Response
+    #[Route('/get/{id}', name: 'get', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    public function get(BooksService $booksService, int $id): Response
     {
-        return $this->render('admin/books/add.html.twig', [
-            'controller_name' => 'BooksController',
+        $book = $booksService->getBookByID($id);
+
+        if(!$book instanceof Book) {
+            $this->redirectToRoute('admin.books.list');
+        }
+
+        return $this->render('admin/books/get.html.twig', [
+            'book' => $book
         ]);
     }
 }

@@ -25,23 +25,26 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $isbn = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publish_date = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail_url = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $short_description = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $long_description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
+
+    #[ORM\Column]
+    private ?int $page_count = null;
 
     public function __construct()
     {
@@ -119,7 +122,7 @@ class Book
         return $this->isbn;
     }
 
-    public function setIsbn(string $isbn): self
+    public function setIsbn(?string $isbn): self
     {
         $this->isbn = $isbn;
 
@@ -131,7 +134,7 @@ class Book
         return $this->publish_date;
     }
 
-    public function setPublishDate(\DateTimeInterface $publish_date): self
+    public function setPublishDate(?\DateTimeInterface $publish_date): self
     {
         $this->publish_date = $publish_date;
 
@@ -143,7 +146,7 @@ class Book
         return $this->thumbnail_url;
     }
 
-    public function setThumbnailUrl(string $thumbnail_url): self
+    public function setThumbnailUrl(?string $thumbnail_url): self
     {
         $this->thumbnail_url = $thumbnail_url;
 
@@ -155,7 +158,7 @@ class Book
         return $this->short_description;
     }
 
-    public function setShortDescription(string $short_description): self
+    public function setShortDescription(?string $short_description): self
     {
         $this->short_description = $short_description;
 
@@ -167,7 +170,7 @@ class Book
         return $this->long_description;
     }
 
-    public function setLongDescription(string $long_description): self
+    public function setLongDescription(?string $long_description): self
     {
         $this->long_description = $long_description;
 
@@ -182,6 +185,18 @@ class Book
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPageCount(): ?int
+    {
+        return $this->page_count;
+    }
+
+    public function setPageCount(int $page_count): self
+    {
+        $this->page_count = $page_count;
 
         return $this;
     }

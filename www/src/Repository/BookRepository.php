@@ -16,51 +16,38 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookRepository extends ServiceEntityRepository
 {
+    public const DEFAULT_PER_PAGE = 20;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Book::class);
     }
 
-    public function save(Book $entity, bool $flush = false): void
+    public function getBooksList(int $page, int $per_page): array|null
     {
-        $this->getEntityManager()->persist($entity);
+        $page = $page > 0 ? $page-1 : 0;
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('b')
+            ->setMaxResults($per_page)
+            ->setFirstResult($page*$per_page)
+            ->getQuery()
+            ->getResult();
     }
 
-    public function remove(Book $entity, bool $flush = false): void
+    public function getBooksListCount(): int
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
-//    /**
-//     * @return Book[] Returns an array of Book objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Book
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getBookByID(int $id): Book|null
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
