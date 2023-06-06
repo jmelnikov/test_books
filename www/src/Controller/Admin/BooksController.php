@@ -4,11 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use App\Repository\BookRepository;
-use App\Service\Admin\BooksService;
+use App\Service\BooksService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/books', name: 'admin.books.')]
