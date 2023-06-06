@@ -36,7 +36,7 @@ class CategoryController extends AbstractController
     #[Route('/save/{id}', name: 'save', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
     public function save(Request $request, CategoryService $categoryService, int $id): Response
     {
-        $category = $categoryService->saveCategory($id, $request);
+        $categoryService->saveCategory($id, $request);
 
         return $this->redirectToRoute('admin.category.get', ['id' => $id]);
     }

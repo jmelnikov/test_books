@@ -3,5 +3,34 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block body %}
-
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Доступные категории</h3>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Название категории</th>
+                    <th scope="col">Книг в категории</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td><a href="{{ path('category.get', {id: category.id}) }}">{{ category.name }}</a></td>
+                        <td>{{ category.books.count }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

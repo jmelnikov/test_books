@@ -20,13 +20,13 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('books.list') }}">Книги</a>
+                        <a class="nav-link" href="{{ path('author.list') }}">Авторы</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('category.list') }}">Категории</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('author.list') }}">Авторы</a>
+                        <a class="nav-link" href="{{ path('books.list') }}">Книги</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ path('feedback.index') }}">Обратная связь</a>
@@ -37,8 +37,9 @@
                             Администрирование
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('admin.books.list') }}">Список книг</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin.author.list') }}">Список авторов</a></li>
                             <li><a class="dropdown-item" href="{{ path('admin.category.list') }}">Список категорий</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin.books.list') }}">Список книг</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ path('admin.feedback.list') }}">Обратная связь</a></li>
                         </ul>

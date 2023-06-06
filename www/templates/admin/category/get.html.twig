@@ -12,9 +12,18 @@
                     <br/>
                     Родительская категория:
                     {% if category.parent is not empty %}
-                        <a href="{{ path('category.get', {id: category.parent.id}) }}">{{ category.parent.name }}</a>
+                        <a href="{{ path('admin.category.get', {id: category.parent.id}) }}">{{ category.parent.name }}</a>
                     {% else %}
                         <em class="text-muted small">Не указана</em>
+                    {% endif %}
+                    <br/>
+                    Дочерние категории:
+                    {% if category.categories is not empty %}
+                        {% for child in category.categories %}
+                        <a href="{{ path('admin.category.get', {id: child.id}) }}">{{ child.name }}</a>
+                        {% endfor %}
+                    {% else %}
+                        <em class="text-muted small">Не указаны</em>
                     {% endif %}
                 </p>
             </div>
