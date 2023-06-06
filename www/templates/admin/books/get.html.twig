@@ -98,6 +98,11 @@
                                                            value="{{ book.title }}">
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label for="pageCount" class="form-label">Количество страниц</label>
+                                                    <input type="number" class="form-control" id="pageCount" name="pageCount"
+                                                           value="{{ book.pageCount }}">
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="publishedDate" class="form-label">Дата публикации</label>
                                                     <input type="date" class="form-control" id="publishedDate" name="publishedDate"
                                                            value="{{ book.publishDate|date('Y-m-d') }}">

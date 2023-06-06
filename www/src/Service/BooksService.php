@@ -64,6 +64,7 @@ class BooksService
 
         $current_book->setTitle($request->request->get('bookTitle'));
         $current_book->setIsbn($request->request->get('bookIsbn'));
+        $current_book->setPageCount($request->request->get('pageCount'));
         $current_book->setShortDescription($request->request->get('shortDescription'));
         $current_book->setLongDescription($request->request->get('longDescription'));
         $current_book->setPublishDate(new \DateTime($request->request->get('publishedDate')));
