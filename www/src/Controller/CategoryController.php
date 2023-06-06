@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Service\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,10 @@ class CategoryController extends AbstractController
     public function get(CategoryService $categoryService, int $id): Response
     {
         $category = $categoryService->getCategoryByID($id);
+
+        if(!$category instanceof Category) {
+            return $this->redirectToRoute('category.list');
+        }
 
         return $this->render('category/get.html.twig', [
             'category' => $category,

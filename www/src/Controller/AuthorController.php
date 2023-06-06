@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
 use App\Service\AuthorsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,10 @@ class AuthorController extends AbstractController
     public function get(AuthorsService $authorsService, int $id): Response
     {
         $author = $authorsService->getAuthorByID($id);
+
+        if(!$author instanceof Author) {
+            return $this->redirectToRoute('author.list');
+        }
 
         return $this->render('author/get.html.twig', [
             'author' => $author,

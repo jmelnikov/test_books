@@ -49,19 +49,19 @@
             <div class="col">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link {% if current_page == 1 %}disabled{% endif %}" href="{{ path('admin.books.list', {page: current_page-1}) }}">Назад</a></li>
+                        <li class="page-item"><a class="page-link {% if current_page == 1 %}disabled{% endif %}" href="{{ path('books.list', {page: current_page-1}) }}">Назад</a></li>
                         {% for paginator in current_page-5..current_page-1 %}
                             {% if paginator >= 1 %}
-                                <li class="page-item"><a class="page-link" href="{{ path('admin.books.list', {page: paginator}) }}">{{ paginator }}</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ path('books.list', {page: paginator}) }}">{{ paginator }}</a></li>
                             {% endif %}
                         {% endfor %}
-                        <li class="page-item"><a class="page-link disabled" href="{{ path('admin.books.list', {page: current_page}) }}">{{ current_page }}</a></li>
+                        <li class="page-item"><a class="page-link disabled" href="{{ path('books.list', {page: current_page}) }}">{{ current_page }}</a></li>
                         {% for paginator in current_page+1..current_page+5 %}
                             {% if paginator <= pages_count %}
-                                <li class="page-item"><a class="page-link" href="{{ path('admin.books.list', {page: paginator}) }}">{{ paginator }}</a></li>
+                                <li class="page-item"><a class="page-link" href="{{ path('books.list', {page: paginator}) }}">{{ paginator }}</a></li>
                             {% endif %}
                         {% endfor %}
-                        <li class="page-item"><a class="page-link {% if current_page == pages_count %}disabled{% endif %}" href="{{ path('admin.books.list', {page: current_page+1}) }}">Вперёд</a></li>
+                        <li class="page-item"><a class="page-link {% if current_page == pages_count %}disabled{% endif %}" href="{{ path('books.list', {page: current_page+1}) }}">Вперёд</a></li>
                     </ul>
                 </nav>
             </div>
