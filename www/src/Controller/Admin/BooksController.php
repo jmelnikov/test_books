@@ -41,4 +41,12 @@ class BooksController extends AbstractController
             'book' => $book
         ]);
     }
+
+    #[Route('/save/{id}', name: 'save', requirements: ['id' => '\d+'], defaults: ['id' => 0])]
+    public function save(Request $request, BooksService $booksService, int $id): Response
+    {
+        $booksService->saveBook($id, $request);
+
+        return $this->redirectToRoute('admin.books.get', ['id' => $id]);
+    }
 }

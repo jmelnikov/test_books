@@ -36,8 +36,57 @@
                                     Количество страниц: {{ book.pageCount }}
                                 </small>
                             </p>
-                            <p class="card-text">{{ book.shortDescription }}</p>
-                            <p class="card-text">{{ book.longDescription }}</p>
+                            <p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editBookModal">
+                                    Редактировать
+                                </button>
+                            {# Modal #}
+                            <div class="modal fade" id="editBookModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form method="post" action="{{ path('admin.books.save', {id: book.id}) }}">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Редактирование книги</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="bookTitle" class="form-label">Название</label>
+                                                    <input type="text" class="form-control" id="bookTitle" name="bookTitle"
+                                                           value="{{ book.title }}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="publishedDate" class="form-label">Дата публикации</label>
+                                                    <input type="date" class="form-control" id="publishedDate" name="publishedDate"
+                                                           value="{{ book.publishDate|date('Y-m-d') }}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="bookIsbn" class="form-label">Название</label>
+                                                    <input type="text" class="form-control" id="bookIsbn" name="bookIsbn"
+                                                           value="{{ book.isbn }}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="shortDescription" class="form-label">Краткое описание</label>
+                                                    <textarea class="form-control" id="shortDescription" name="shortDescription" rows="3">{{ book.shortDescription }}</textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="longDescription" class="form-label">Полное описание</label>
+                                                    <textarea class="form-control" id="longDescription" name="longDescription" rows="5">{{ book.longDescription }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </p>
+                            <p class="card-text">{{ book.shortDescription|nl2br }}</p>
+                            <p class="card-text">{{ book.longDescription|nl2br }}</p>
                         </div>
                     </div>
                 </div>
