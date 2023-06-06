@@ -34,7 +34,7 @@ class BooksController extends AbstractController
         $book = $booksService->getBookByID($id);
 
         if(!$book instanceof Book) {
-            $this->redirectToRoute('admin.books.list');
+            $this->redirectToRoute('books.list');
         }
 
         return $this->render('books/get.html.twig', [
