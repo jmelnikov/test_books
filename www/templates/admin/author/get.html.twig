@@ -61,7 +61,7 @@
                     {% for book in author.books %}
                         <tr>
                             <th scope="row">{{ book.id }}</th>
-                            <td><a href="{{ path('books.get', {id: book.id}) }}">{{ book.title }}</a></td>
+                            <td><a href="{{ path('admin.books.get', {id: book.id}) }}">{{ book.title }}</a></td>
                             <td>{{ book.publishDate|date('Y') }}</td>
                             <td>{{ book.isbn }}</td>
                         </tr>

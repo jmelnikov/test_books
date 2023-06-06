@@ -20,7 +20,7 @@
                     Дочерние категории:
                     {% if category.categories is not empty %}
                         {% for child in category.categories %}
-                        <a href="{{ path('admin.category.get', {id: child.id}) }}">{{ child.name }}</a>
+                        <a href="{{ path('admin.category.get', {id: child.id}) }}">{{ child.name }}</a>{% if child != category.categories.last %}, {% endif %}
                         {% endfor %}
                     {% else %}
                         <em class="text-muted small">Не указаны</em>

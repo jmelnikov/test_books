@@ -12,16 +12,14 @@
                         <th scope="col">ID</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Количество книг</th>
-                        <th scope="col">Действие</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for author in authors %}
                         <tr>
                             <th scope="row">{{ author.id }}</th>
-                            <td>{{ author.name }}</td>
+                            <td><a href="{{ path('admin.author.get', {id: author.id}) }}">{{ author.name }}</a></td>
                             <td>{{ author.books.count }}</td>
-                            <td><a href="{{ path('admin.author.get', {id: author.id}) }}">Смотреть книги автора</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
